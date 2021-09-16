@@ -1,9 +1,9 @@
-=================================================================================
-Morpho-kinematics of the Wolf-Rayet planetary nebula Abell 48. Supplementary Data
-=================================================================================
+=============================================================
+Morpho-kinematics of the Wolf-Rayet planetary nebula Abell 48
+=============================================================
 
-Morpho-kinematics of the Wolf-Rayet planetary nebula Abell 48. Supplementary Data
-=================================================================================
+Morpho-kinematics of the Wolf-Rayet planetary nebula Abell 48
+=============================================================
 
 The file of the 3D model of Abell 48 in **Figure 5** is available in the Alias/WaveFront object file format on Sketchfab and along with the x3d file format archived on Zenodo. 
 

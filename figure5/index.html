@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!--
+HTML and Javascript codes developed by Ashkbiz Danehkar 
+using the X3DOM framework and runtime for 3D graphics on the Web, 
+University of Michigan, 2021
+https://danehkar.github.io/
+This interface uses the X3DOM framework:
+"X3DOM: a DOM-based HTML5/X3D integration model" Behr, J., Eschler, P., Jung, Y.,  Zollner, M., 
+in Proc. the 14th Inter. Conf. on 3D Web Technology, 127–135 (2009), doi:10.1145/1559764.1559784
+-->
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Interactive 3D Figure of the Morpho-kinematic Mesh Model of Abell 48</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!--<script type='text/javascript' src='https://www.x3dom.org/x3dom/release/x3dom.js'></script>
+    <link rel='stylesheet' type='text/css' href='https://www.x3dom.org/x3dom/release/x3dom.css'/>-->
+    <script type='text/javascript' src='x3dom.js'></script>
+    <link rel='stylesheet' type='text/css' href='x3dom.css'/>
+    <script type="text/javascript" src="x3dom-include.js"></script>
+</head>
+<body>
+
+<h1>Morpho-kinematics of the Wolf-Rayet planetary nebula Abell 48</h1>
+
+<h2>Interactive Figure</h2>
+
+<p>
+<b>Figure 5.</b> The interactive figure of the morpho-kinematic mesh models of the PN Abell 48 in the X3DOM framework.
+</p>
+
+<table>
+  <tr>
+    <th width="20"></th>
+    <th height="100%"></th>
+  </tr>
+  <tr>
+   <td style="width: 20; vertical-align:top">
+   </td>
+   <td style="text-align: center; vertical-align: middle;">
+   <center>
+   <span id="value_pn_name" style="font-weight:bold;color:black"></span>
+   </center>
+   </td>
+</tr>
+  <tr>
+    <td style="width: 0; vertical-align:top">
+   </td>
+  <td style="text-align: center; vertical-align: middle;">
+<x3d id='x3d' width="600px" height="600px">
+    <scene id='scene' DEF='scene'>
+     <viewpoint id='viewpoint' fieldOfView='0.785398'></viewpoint>
+<!--         <OrthoViewpoint id="orthoviewpoint" fieldOfView="-1 -1 1 1" viewAll='true'></OrthoViewpoint> -->
+     <Transform id='transz' rotation = '0 0 1 0'>
+     <!-- 90 deg rotation around the y-axis (up/down) -->
+      <Transform id='transy' rotation = '0 1 0 1.5708'>
+       <!-- -90 deg rotation around the x-axis -->
+       <Transform id='transx' rotation = '1 0 0 -1.5708'>
+           <Inline id='inline' url="m3-30.x3d" nameSpaceName="MAIN" mapDEFToID="true"></Inline>
+       </Transform>
+      </Transform>
+    </Transform>
+    </scene>
+</x3d>
+</td>
+</tr>
+  <tr>
+  <td style="width: 20; vertical-align:top">
+  </td>
+  <td style="text-align: center; vertical-align: middle;">
+    <input type="button" value="Top View" onclick="transfer_top();" style="width: 80px;">
+    <input type="button" value="Front View" onclick="transfer_front();" style="width: 80px;">
+    <input type="button" value="Best View" onclick="transfer_pa_inc(pos_ang,inc_ang);" style="width: 80px;">
+    <input type="button" value="Zoom +" onclick="zoom(-0.05);" style="width: 80px;">
+    <input type="button" value="Zoom -" onclick="zoom(0.05);" style="width: 80px;">
+    <input type="button" value="Reset" onclick="reset_view();" style="width: 80px;">
+  </td>
+</tr>
+</table>
+<script>
+var pos_ang = 130.0;
+var inc_ang = 30.0;
+
+function fitAll(){
+    document.getElementById('x3d').runtime.fitAll();
+}
+
+function change_viewpoint(typename, id)
+{
+/* ====================================================
+Change viewpoint of X3DOM.
+typename: string -
+walk:        Switches to walk mode.
+examine:     Switches to examine mode.
+lookAround:  Switches to lookAround mode.
+lookAt:      Switches to lookAt mode.
+resetView:   Navigates to the initial viewpoint.
+uprightView: Navigates to upright view.
+showAll:     Zooms so that all objects are visible.
+nextView:    Navigates to the next viewpoint.
+prevView:    Navigates to the previous viewpoint.
+Returns:     The current viewpoint.
+==================================================== */
+    var x3d_element = document.getElementById(id);
+    switch (typename)
+    {
+        case "walk": x3d_element.runtime.walk(); break;
+        case "fly": x3d_element.runtime.fly(); break;
+        case "examine": x3d_element.runtime.examine(); break;
+        case "lookAround": x3d_element.runtime.lookAround(); break;
+        case "lookAt": x3d_element.runtime.lookAt(); break;
+        case "game": x3d_element.runtime.game(); break;
+        case "resetView": x3d_element.runtime.resetView(); break;
+        case "uprightView": x3d_element.runtime.uprightView(); break;
+        case "showAll": x3d_element.runtime.showAll(); break;
+        case "fitAll": x3d_element.runtime.fitAll(); break;
+        case "nextView": x3d_element.runtime.nextView(); break;
+        case "prevView": x3d_element.runtime.prevView(); break;
+        default: x3d_element.runtime.examine();
+    }
+}
+
+function remove_all_child_nodes(parent) {
+    for (var i = 0; i < parent.childNodes.length; i++) {
+        if (parent.childNodes[i].nodeType === Node.ELEMENT_NODE) {
+            parent.removeChild(ot.childNodes[i]);
+  	    break;
+  	}
+   }
+}
+
+function change_perpective(){
+    document.getElementById('x3d').runtime.nextView();
+    return false;
+}
+ 
+function load_x3d_file(filename,pn_name,png_name,pa_deg,i_deg) {
+    pos_ang = pa_deg;
+    inc_ang = i_deg;
+    //value_pn_name.innerHTML=pn_name+ ' (PNG'+png_name+')';
+    value_pn_name.innerHTML=pn_name;
+    x3dom.reload();
+    var inline = document.getElementById("inline");
+    inline.setAttribute("url", filename);
+    var x3d_element = document.getElementById('x3d');
+//    x3d_element.runtime.fitAll();
+//    x3d_element.addEventListener("downloadsfinished",
+//          function()
+//          {
+//              x3d_element.runtime.fitAll();
+//          }
+//      );
+    transfer_pa_inc(pos_ang,inc_ang);
+//    change_viewpoint('showAll','x3d');
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+    //x3d_element.runtime.fitAll();
+    x3d_element.runtime.showAll();
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+}
+        
+function transfer_pa_inc(pa_deg,i_deg) {
+    x3dom.reload();
+    var x3d_element = document.getElementById('x3d');
+    //x3d_element.runtime.fitAll();
+    x3d_element.runtime.showAll();
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+    var transx = document.getElementById("transx");
+    var transy = document.getElementById("transy");
+    var transz = document.getElementById("transz");
+    var pa_rad=3.14*(180+pa_deg+0.0)/180;
+    var i_rad=3.14*(i_deg)/180;
+    transx.setAttribute("rotation", '1 0 0 '+String(i_rad));
+    transy.setAttribute("rotation", '0 1 0 0');
+    transz.setAttribute("rotation", '0 0 1 '+String(pa_rad));
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+    //x3d_element.runtime.fitAll();
+    x3d_element.runtime.showAll();
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+}
+        
+function transfer_front() {
+    x3dom.reload();
+    var x3d_element = document.getElementById('x3d');
+    //x3d_element.runtime.fitAll();
+    x3d_element.runtime.showAll();
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+    var transx = document.getElementById("transx");
+    var transy = document.getElementById("transy");
+    var transz = document.getElementById("transz");
+    transx.setAttribute("rotation", '1 0 0 1.5708');
+    transy.setAttribute("rotation", '0 1 0 1.5708');
+    transz.setAttribute("rotation", '0 0 1 0');
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+    //x3d_element.runtime.fitAll();
+    x3d_element.runtime.showAll();
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+}
+        
+function transfer_top() {
+    x3dom.reload();
+    var x3d_element = document.getElementById('x3d');
+    //x3d_element.runtime.fitAll();
+    x3d_element.runtime.showAll();
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+    var transx = document.getElementById("transx");
+    var transy = document.getElementById("transy");
+    var transz = document.getElementById("transz");
+    transx.setAttribute("rotation", '1 0 0 0');
+    transy.setAttribute("rotation", '0 1 0 0');
+    transz.setAttribute("rotation", '0 0 1 3.1416');
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+    //x3d_element.runtime.fitAll();
+    x3d_element.runtime.showAll();
+    x3d_element.addEventListener("downloadsfinished",
+        function()
+        {
+             x3d_element.runtime.fitAll();
+        }
+    );
+}
+
+function reset_view() {
+    x3dom.reload();
+    var x3d_element = document.getElementById('x3d');
+    x3d_element.addEventListener("downloadsfinished",
+          function()
+          {
+              x3d_element.runtime.fitAll();
+          }
+    );
+    //x3d_element.runtime.fitAll();
+    x3d_element.runtime.showAll();
+    x3d_element.addEventListener("downloadsfinished",
+          function()
+          {
+              x3d_element.runtime.fitAll();
+          }
+    );
+}
+    
+function zoom(scalezoom) {
+    var vpt = document.getElementById("viewpoint");
+    vpt.fieldOfView = parseFloat(vpt.fieldOfView) + scalezoom;
+    x3dom.reload();
+}
+
+var value_pn_name=document.getElementById("value_pn_name");
+value_pn_name.innerHTML ='Abell 48';
+x3dom.reload();
+load_x3d_file('abel48.x3d','Abell 48','029.0+00.4',130.0,30.0);
+//change_viewpoint('showAll','x3d');
+</script>
+    
+</body>
+</html> 

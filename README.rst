@@ -1,13 +1,13 @@
-=============================================================
-Morpho-kinematics of the Wolf-Rayet planetary nebula Abell 48
-=============================================================
+==========================================================
+Spatio-kinematic Modeling of the Planetary Nebula Abell 48
+==========================================================
 
 .. image:: https://img.shields.io/badge/DOI-10.5281/zenodo.5511247-blue.svg
     :target: https://doi.org/10.5281/zenodo.5511247
     :alt: Zenodo
 
-Morpho-kinematics of the Wolf-Rayet planetary nebula Abell 48
-=============================================================
+3D spatio-kinematic modeling of Abell 48, a planetary nebula around a Wolf-Rayet [WN] star
+==========================================================================================
 
 The file of the 3D model of Abell 48 in **Figure 5** is available in the Alias/WaveFront object file format on Sketchfab and along with the x3d file format archived on Zenodo. 
 
@@ -22,7 +22,7 @@ Citation
 
    @article{Danehkar2021,
      author = {{Danehkar}, A.},
-     title = {Morpho-kinematics of the Wolf-Rayet planetary nebula Abell 48},
+     title = {3D spatio-kinematic modeling of Abell 48, a planetary nebula around a Wolf-Rayet [WN] star},
      journal = {submitted },
      volume = {},
      number = {},

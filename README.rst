@@ -1,6 +1,6 @@
-==========================================================
-Spatio-kinematic Modeling of the Planetary Nebula Abell 48
-==========================================================
+=============================================================
+3D Spatio-kinematic Modeling of the Planetary Nebula Abell 48
+=============================================================
 
 .. image:: https://img.shields.io/badge/DOI-10.5281/zenodo.5511247-blue.svg
     :target: https://doi.org/10.5281/zenodo.5511247

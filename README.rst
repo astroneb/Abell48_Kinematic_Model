@@ -23,12 +23,12 @@ Citation
    @article{Danehkar2021,
      author = {{Danehkar}, A.},
      title = {3D spatio-kinematic modeling of Abell 48, a planetary nebula around a Wolf-Rayet [WN] star},
-     journal = {submitted },
+     journal = {MNRAS},
      volume = {},
-     number = {},
+     number = {stab3735},
      pages = {},
-     year = {2021},
-     doi = {}
+     year = {2022},
+     doi = {10.1093/mnras/stab3735}
    }
    
    Learn More

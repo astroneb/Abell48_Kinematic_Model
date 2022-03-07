@@ -8,17 +8,19 @@ x3dom_include.findPackagesJSON = function ( basePath )
 
     var xhr = new XMLHttpRequest();
 
-    xhr.open( "GET", basePath + "build/core/packages.json", false );
+    //xhr.open( "GET", basePath + "build/core/packages.json", false );
 
     xhr.addEventListener( "load", function ( e )
     {
         if ( xhr.status !== 200 )
         {
-            x3dom_include.findPackagesJSON( "../" + basePath );
+            //x3dom_include.findPackagesJSON( "../" + basePath );
+            x3dom_include.findPackagesJSON( basePath );
         }
         else
         {
-            x3dom_include.includeCSS( basePath + "src/x3dom.css" );
+            //x3dom_include.includeCSS( basePath + "src/x3dom.css" );
+            x3dom_include.includeCSS( basePath + "x3dom.css" );
             x3dom_include.includeScripts( basePath, JSON.parse( xhr.response ) );
         }
     } );
